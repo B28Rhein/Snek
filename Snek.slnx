@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="Snek/Snek.vcxproj" />
+  <Project Path="Snek/Snek.vcxproj" Id="a7169115-7c63-457d-9d93-2fdc11e2c6e0" />
 </Solution>
