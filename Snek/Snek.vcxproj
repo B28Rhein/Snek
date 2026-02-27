@@ -133,13 +133,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Buffers.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerTile.cpp" />
+    <ClCompile Include="Rect.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Defs.h" />
     <ClCompile Include="Snek.cpp" />
+    <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Buffers.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerTile.h" />
+    <ClInclude Include="Rect.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Snek.h" />
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="Tile.h" />
+    <ClInclude Include="TileMap.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShader.glsl" />
