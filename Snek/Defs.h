@@ -20,6 +20,7 @@
 typedef glm::vec4 vec4;
 typedef glm::vec3 vec3;
 typedef glm::vec2 vec2;
+typedef glm::ivec2 ivec2;
 typedef glm::mat4 mat4;
 typedef unsigned int uint;
 
@@ -57,6 +58,38 @@ struct Brush {
 		}
 
 		glBindVertexArray(rect->GetVao());
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glBindVertexArray(0);
+	}
+	template<class T>
+	void DrawLetter(T* rect, ivec2 offset) {
+		texSh->use();
+		texSh->setVec4("Colour", colour);
+		texSh->setMat4("model", rect->GetModel());
+		texSh->setMat4("view", view);
+		texSh->setMat4("projection", projection);
+
+		float spriteWidth = 6.0f;
+		float spriteHeight = 10.0f;
+		float tw = spriteWidth / 78;
+		float th = spriteHeight / 70;
+		int xPosition = offset.x;
+		int yPosition = offset.y;
+
+		float NewTexCoords[] = {
+			(xPosition + 1) * tw - 0.001, (yPosition + 1) * th + 0.001,
+			(xPosition + 1) * tw - 0.001, yPosition * th + 0.001,
+			xPosition * tw-0.001 , yPosition * th+0.001,
+			xPosition * tw-0.001, (yPosition + 1) * th + 0.001
+		};
+		glBindBuffer(GL_ARRAY_BUFFER, rect->GetTexBuf());
+		glBufferSubData(GL_ARRAY_BUFFER, 0, 8 * sizeof(float), NewTexCoords);
+
+		glActiveTexture(GL_TEXTURE0);
+		texSh->setInt("tex", 0);
+		glBindTexture(GL_TEXTURE_2D, texture->ID);
+
+		glBindVertexArray(rect->GetLetterVao());
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 	}

@@ -13,10 +13,24 @@ uint RectIndices[] = {
 	1, 2, 3
 };
 
+float LetterVerices[] = {
+	0.5f,  0.5f, 0.0f,
+	0.5f, -0.5f, 0.0f,
+	-0.5f, -0.5f, 0.0f,
+	-0.5f,  0.5f, 0.0f,
+};
+float LetterTexVertices[] = {
+	1.0f, 1.0f,
+	1.0f, 0.0f,
+	0.0f, 0.0f,
+	0.0f, 1.0f
+};
+
 void ProcessInput();
-uint GenTex(std::string path);
 
 Snek* snek;
+int WinMain();
+
 
 int main()
 {
@@ -42,6 +56,7 @@ int main()
 	Shader* texSh = new Shader("VertexShader.glsl", "FragTexShader.glsl");
 
 	Rect::buf = new Buffers(RectVertices, RectIndices, 20, 6);
+	Rect::letterBuf = new Buffers(LetterVerices, LetterTexVertices, RectIndices, 12, 6);
 
 	snek->CreateTilemap(15, 15, 900, vec2(0, -150));
 	snek->CreatePlayer();
@@ -110,10 +125,20 @@ int main()
 	OutBrush.view = view;
 	OutBrush.sh = sh;
 
+	Brush LetterBrush = Brush();
+	LetterBrush.colour = vec4(0);
+	LetterBrush.projection = projection;
+	LetterBrush.view = view;
+	LetterBrush.sh = sh;
+	LetterBrush.texSh = texSh;
+	//https://frostyfreeze.itch.io/pixel-bitmap-fonts-png-xml
+	LetterBrush.texture = new Texture("Textures\\characters.png");
+
 	snek->SetTilemapBrush(0, &State0Brush);
 	snek->SetTilemapBrush(1, &State1Brush);
 	snek->SetTilemapBrush(-1, &OutBrush);
 	snek->SetPlayerBrush(&headBrush, &mid1Brush, &mid2Brush, &tailBrush);
+	snek->SetLetterBrush(&LetterBrush);
 
 	snek->GenApel();
 
@@ -125,6 +150,7 @@ int main()
 		//Draw
 		backgrundBrush.ClearWindow();
 		snek->Draw();
+
 		//EndRender
 		snek->GetWindow()->RenderEnd();
 
@@ -132,6 +158,10 @@ int main()
 	snek->GetWindow()->Terminate();
 	delete sh;
 	delete snek;
+}
+
+int WinMain() {
+	return main();
 }
 
 void ProcessInput() {

@@ -100,8 +100,5 @@
     <None Include="FragTexShader.glsl">
       <Filter>Pliki zasobów</Filter>
     </None>
-    <None Include="LetterShader.glsl">
-      <Filter>Pliki zasobów</Filter>
-    </None>
   </ItemGroup>
 </Project>

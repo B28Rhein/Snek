@@ -10,6 +10,7 @@ class Rect
 	
 public:
 	static Buffers* buf;
+	static Buffers* letterBuf;
 	Rect(float x, float y, float dx, float dy);
 	Rect(Rect* rect);
 	mat4 GetModel(float rotation = 0);
@@ -18,5 +19,7 @@ public:
 	void SetPos(vec2 npos);
 	void SetPos(float, float);
 	uint GetVao();
+	uint GetLetterVao();
+	uint GetTexBuf();
 };
 

@@ -1,6 +1,7 @@
 #include "Rect.h"
 
 Buffers* Rect::buf = nullptr;
+Buffers* Rect::letterBuf = nullptr;
 
 Rect::Rect(float x, float y, float dx, float dy) {
 	this->x = x;
@@ -51,4 +52,14 @@ void Rect::SetPos(float nx, float ny)
 uint Rect::GetVao()
 {
 	return Rect::buf->GetVao();
+}
+
+uint Rect::GetLetterVao()
+{
+	return Rect::letterBuf->GetVao();
+}
+
+uint Rect::GetTexBuf()
+{
+	return Rect::letterBuf->GetTexBuf();
 }

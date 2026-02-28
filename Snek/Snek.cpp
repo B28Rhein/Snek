@@ -66,7 +66,7 @@ void Snek::MovePlayer() {
 		}
 
 	}
-	ShowPoints();
+	//ShowPoints();
 
 }
 
@@ -79,6 +79,11 @@ void Snek::CalcDeltaTime() {
 void Snek::SetPlayerBrush(Brush* headBrush, Brush* mid1Brush, Brush* mid2Brush, Brush* tailBrush)
 {
 	player->SetBrushes(headBrush, mid1Brush, mid2Brush, tailBrush);
+}
+
+void Snek::SetLetterBrush(Brush* letterBrush)
+{
+	this->letterBrush = letterBrush;
 }
 
 void Snek::PauseUnpause()
@@ -96,7 +101,42 @@ void Snek::Draw()
 {
 	map->Draw(isInTextureMode);
 	player->Draw(isInTextureMode);
+	std::vector<std::string> linesToDraw = std::vector<std::string>();
+	std::string s = "You've got: ";
+	std::string s2 = std::to_string(pointCounter);
+	std::string s3 = " points";
+	std::string sc = s + s2 + s3;
+	
+	std::string s4 = "FPS: " + std::to_string(1 / deltaTime);
+	std::string lostS = "YOU'VE LOST";
+	vec2 textPos = vec2(-window->GetSize().x / 2 + 50, window->GetSize().y / 2 - 50);
+	linesToDraw.push_back(sc);
+	if (debug)
+		linesToDraw.push_back(s4);
+	if (gameLost)
+		linesToDraw.push_back(lostS);
+	DrawMulLines(linesToDraw, textPos);
 }
+
+void Snek::DrawString(std::string s, vec2 pos) {
+	for (int i = 0; i < s.length(); i++) {
+		DrawLetter(s[i], vec2(pos.x + 12 * i, pos.y));
+
+	}
+}
+void Snek::DrawMulLines(std::vector<std::string> lines, vec2 pos) {
+	for (int i = 0; i < lines.size(); i++) {
+		DrawString(lines[i], pos + vec2(0, -25 * i));
+	}
+}
+
+void Snek::DrawLetter(char letter, vec2 pos)
+{
+	ivec2 offset = GetLetterOffset(letter);
+	Rect* r = new Rect(pos.x, pos.y, 12, 20);
+	letterBrush->DrawLetter(r, offset);
+}
+
 
 void Snek::GenApel() {
 	std::random_device rand;
@@ -138,6 +178,7 @@ void Snek::ShowPoints() {
 	if (inProgress && debug)
 		std::cout
 		<< pointCounter << "\n"
+		<< 1/deltaTime << "\n"
 		<< MoveCounter << "\n"
 		<< deltaTime << "\n"
 		<< 1 / moveSpeed << "\n"
@@ -156,6 +197,82 @@ void Snek::ShowPoints() {
 	else if (gameLost) {
 		std::cout << "YOU'VE LOST";
 	}
+}
+
+ivec2 Snek::GetLetterOffset(char letter)
+{
+	if (letter >= 'A' && letter <= 'Z') {
+		ivec2 A = ivec2(0, 6);
+		int diff = letter - 'A';
+		return ivec2(A + ivec2(diff % 13, -diff / 13));
+	}
+	if (letter >= 'a' && letter <= 'z') {
+		ivec2 A = ivec2(0, 4);
+		int diff = letter - 'a';
+		return ivec2(A + ivec2(diff % 13, -diff / 13));
+	}
+	if (letter >= '0' && letter <= '9') {
+		ivec2 A = ivec2(0, 2);
+		int diff = letter - '0';
+		return ivec2(A + ivec2(diff % 13, -diff / 13));
+	}
+	switch (letter) {
+	case '+':
+		return ivec2(10, 2);
+	case '-':
+		return ivec2(11, 2);
+	case '=':
+		return ivec2(12, 2);
+	case '(':
+		return ivec2(0, 1);
+	case ')':
+		return ivec2(1, 1);
+	case '[':
+		return ivec2(2, 1);
+	case ']':
+		return ivec2(3, 1);
+	case '{':
+		return ivec2(4, 1);
+	case '}':
+		return ivec2(5, 1);
+	case '<':
+		return ivec2(6, 1);
+	case '>':
+		return ivec2(7, 1);
+	case '/':
+		return ivec2(8, 1);
+	case '*':
+		return ivec2(9, 1);
+	case ':':
+		return ivec2(10, 1);
+	case '#':
+		return ivec2(11, 1);
+	case '%':
+		return ivec2(12, 1);
+	case '!':
+		return ivec2(0, 0);
+	case '?':
+		return ivec2(1, 0);
+	case '.':
+		return ivec2(2, 0);
+	case ',':
+		return ivec2(3, 0);
+	case '\'':
+		return ivec2(4, 0);
+	case '\"':
+		return ivec2(5, 0);
+	case '@':
+		return ivec2(6, 0);
+	case '&':
+		return ivec2(7, 0);
+	case '$':
+		return ivec2(8, 0);
+	case ' ':
+		return ivec2(9, 0);
+	default:
+		break;
+	}
+	
 }
 
 Window* Snek::GetWindow()
