@@ -11,6 +11,6 @@ public:
 	int GetState();
 	void SetState(int s);
 	Tile(float, float, float, float, int);
-	void Draw(Brush outB, Brush inB);
+	void Draw(Brush* outB, Brush* inB0, Brush* inB, bool inTexMode);
 };
 

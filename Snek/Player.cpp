@@ -27,8 +27,8 @@ void Player::Move(vec2 NewPosition) {
 	*y = NewPosition.y;
 }
 
-void Player::Draw() {
-	pt->Draw(*brush);
+void Player::Draw(bool inTexMode) {
+	pt->Draw(headBrush, midlStrBrush, midlCurBrush, tailBrush, true, moveDir, inTexMode);
 }
 
 bool Player::PlayerOnTile(int x, int y, TileMap* map) {
@@ -37,9 +37,12 @@ bool Player::PlayerOnTile(int x, int y, TileMap* map) {
 	return pt->TileInPosition(coord.x, coord.y);
 }
 
-void Player::SetBrush(Brush* b)
+void Player::SetBrushes(Brush* headB, Brush* midl1B, Brush* midl2B, Brush* tailB)
 {
-	brush = b;
+	headBrush = headB;
+	midlStrBrush = midl1B;
+	midlCurBrush = midl2B;
+	tailBrush = tailB;
 }
 
 void Player::AddTile()

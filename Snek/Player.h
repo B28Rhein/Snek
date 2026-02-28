@@ -7,15 +7,19 @@ class Player
 	float* x;
 	float* y;
 	PlayerTile* pt;
-	Brush* brush;
+	Brush* headBrush;
+	Brush* tailBrush;
+	Brush* midlStrBrush;
+	Brush* midlCurBrush;
 public:
+	int moveDir = 0;
 	Player(vec2 RectSize, vec2 startPos);
 	float GetPos(int t);
 	vec2 GetPos();
 	void Move(vec2 moveVector);
-	void Draw();
+	void Draw(bool inTexMode);
 	bool PlayerOnTile(int x, int y, TileMap* map);
-	void SetBrush(Brush*);
+	void SetBrushes(Brush * headB, Brush * midl1B, Brush * midl2B, Brush* tailB);
 	void AddTile();
 };
 

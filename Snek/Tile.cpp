@@ -22,8 +22,10 @@ Tile::Tile(float x, float y, float dx, float dy, int s)
 	state = s;
 }
 
-void Tile::Draw(Brush outB, Brush inB)
+void Tile::Draw(Brush* outB, Brush* inB0, Brush* inB, bool inTexMode)
 {
-	outB.DrawRect(outR);
-	inB.DrawRect(inR);
+	outB->DrawRect(outR, inTexMode);
+	inB0->DrawRect(inR, inTexMode);
+	if(state > 0)
+		inB->DrawRect(inR, inTexMode);
 }

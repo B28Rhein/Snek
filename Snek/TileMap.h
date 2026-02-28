@@ -15,7 +15,7 @@ public:
 	TileMap(int x, int y, float len);
 	TileMap(int x, int y, float len, vec2 offset);
 	void SetBrush(int BrushNo, Brush* brush);
-	void Draw();
+	void Draw(bool inTextureMode);
 	vec2 GetTileSize();
 	vec4 GetBoundries();
 	Tile* GetTile(int x, int y);

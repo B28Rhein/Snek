@@ -18,10 +18,11 @@ Rect::Rect(Rect* rect)
 	this->dy =	rect->dy;
 }
 
-mat4 Rect::GetModel() {
+mat4 Rect::GetModel(float rotation) {
 	mat4 model = mat4(1.0f);
 	model = glm::translate(model, vec3(x, y, 0));
 	model = glm::scale(model, vec3(dx, dy, 1));
+	model = glm::rotate(model, glm::radians(rotation), vec3(0, 0, 1.0f));
 	return model;
 }
 

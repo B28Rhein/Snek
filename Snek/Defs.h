@@ -15,6 +15,7 @@
 #include <iostream>
 
 #include "Shader.h"
+#include "Texture.h"
 
 typedef glm::vec4 vec4;
 typedef glm::vec3 vec3;
@@ -26,23 +27,34 @@ struct Brush {
 	vec4 colour;
 	mat4 projection;
 	mat4 view;
+	Texture* texture = nullptr;
 	Shader* sh = nullptr;
+	Shader* texSh = nullptr;
 	void ClearWindow() {
 		glClearColor(colour.r, colour.g, colour.b, colour.a);
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 	template<class T>
-	void DrawRect(T* rect) {
-		sh->use();
-		sh->setVec4("Colour", colour);
+	void DrawRect(T* rect, bool inTextureMode = false, float rotation = 0) {
+		
 
-		sh->setMat4("model", rect->GetModel());
-
-
-		sh->setMat4("view", view);
-
-
-		sh->setMat4("projection", projection);
+		if (inTextureMode && texture != nullptr) {
+			texSh->use();
+			texSh->setVec4("Colour", colour);
+			texSh->setMat4("model", rect->GetModel(rotation));
+			texSh->setMat4("view", view);
+			texSh->setMat4("projection", projection);
+			glActiveTexture(GL_TEXTURE0);
+			texSh->setInt("tex", 0);
+			glBindTexture(GL_TEXTURE_2D, texture->ID);
+		}
+		else {
+			sh->use();
+			sh->setVec4("Colour", colour);
+			sh->setMat4("model", rect->GetModel(rotation));
+			sh->setMat4("view", view);
+			sh->setMat4("projection", projection);
+		}
 
 		glBindVertexArray(rect->GetVao());
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

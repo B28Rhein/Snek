@@ -76,10 +76,9 @@ void TileMap::SetBrush(int BrushNo, Brush* brush)
 	StateBrushes[BrushNo] = brush;
 }
 
-void TileMap::Draw() {
+void TileMap::Draw(bool inTextureMode) {
 	for (int i = 0; i < x * y; i++) {
-		
-		map[i]->Draw(*OutBrush, *StateBrushes[map[i]->GetState()]);
+		map[i]->Draw(OutBrush, StateBrushes[0], StateBrushes[map[i]->GetState()], inTextureMode);
 
 	}
 }

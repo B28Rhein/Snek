@@ -24,6 +24,7 @@ class Snek
 	Tile* GetTileFromDrawCoords(float X, float Y);
 	void ShowPoints();
 public:
+	bool isInTextureMode = false;
 	int bannedDir = 0;
 	char direction = 0;
 	Snek();
@@ -36,7 +37,8 @@ public:
 	void GenApel();
 	void MovePlayer();
 	void CalcDeltaTime();
-	void SetPlayerBrush(Brush* brush);
+	void SetPlayerBrush(Brush * headBrush, Brush* mid1Brush, Brush * mid2Brush, Brush* tailBrush);
+	void PauseUnpause();
 	void Draw();
 	~Snek();
 };

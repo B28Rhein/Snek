@@ -142,6 +142,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Defs.h" />
     <ClCompile Include="Snek.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -154,12 +155,15 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Snek.h" />
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShader.glsl" />
+    <None Include="FragTexShader.glsl" />
+    <None Include="LetterShader.glsl" />
     <None Include="VertexShader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

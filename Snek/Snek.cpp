@@ -49,6 +49,7 @@ void Snek::MovePlayer() {
 		if (player->PlayerOnTile((int)tileCoords.x, (int)tileCoords.y, map) && (player->GetPos(0) != playerNewX || player->GetPos(1) != playerNewY)) {
 			gameLost = true;
 			inProgress = false;
+			return;
 		}
 		playerNewX = t->GetPos().x;
 		playerNewY = t->GetPos().y;
@@ -60,6 +61,7 @@ void Snek::MovePlayer() {
 			moveSpeed += 0.5;
 		}
 		if (t->GetState() != 2) {
+			player->moveDir = this->direction;
 			player->Move(vec2(playerNewX, playerNewY));
 		}
 
@@ -74,15 +76,26 @@ void Snek::CalcDeltaTime() {
 	lastFrame = currentFrame;
 }
 
-void Snek::SetPlayerBrush(Brush* brush)
+void Snek::SetPlayerBrush(Brush* headBrush, Brush* mid1Brush, Brush* mid2Brush, Brush* tailBrush)
 {
-	player->SetBrush(brush);
+	player->SetBrushes(headBrush, mid1Brush, mid2Brush, tailBrush);
+}
+
+void Snek::PauseUnpause()
+{
+	if (inProgress) {
+		inProgress = false;
+		return;
+	}
+	if (!inProgress) {
+		inProgress = true;
+	}
 }
 
 void Snek::Draw()
 {
-	map->Draw();
-	player->Draw();
+	map->Draw(isInTextureMode);
+	player->Draw(isInTextureMode);
 }
 
 void Snek::GenApel() {
@@ -134,7 +147,9 @@ void Snek::ShowPoints() {
 		<< "\n"
 		<< (int)direction
 		<< "\n"
-		<< bannedDir;
+		<< bannedDir
+		<<"\n"
+		<< player->moveDir;
 	else if (inProgress) {
 		std::cout << pointCounter;
 	}
